@@ -1,34 +1,34 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import Header from './containers/Header'
+import Content from './containers/Content'
 import BookmarkList from './containers/BookmarkList'
-import * as actionCreators from './actions/api'
+import { CATEGORIES } from './constants/ApiCategory'
+import 'material-design-lite/material.js'
+import 'material-design-lite/material.css'
+import './App.css'
 
 class App extends Component {
-  componentDidMount() {
-    this.handleFetchBookmarks()
-  }
-
-  handleFetchBookmarks() {
-    this.props.fetchBookmarks()
-  }
-
   render() {
-    const { bookmarks } = this.props
+    let tabs = Object.keys(CATEGORIES).map(key => ({
+      id: key,
+      caption: CATEGORIES[key].name,
+      active: CATEGORIES[key].default
+    }))
+
+    let contents = Object.keys(CATEGORIES).map(key => ({
+      id: key,
+      content: (
+        <BookmarkList category={key} />
+      )
+    }))
 
     return (
-      <div className="App">
-        <BookmarkList bookmarks={bookmarks} />
+      <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <Header title="ホッテントリ" tabs={tabs} />
+        <Content panels={contents} />
       </div>
     )
   }
 }
-
-const mapStateToProps = (state) => {
-  return {
-    bookmarks: state.bookmarks
-  }
-}
-
-App = connect(mapStateToProps, actionCreators)(App)
 
 export default App

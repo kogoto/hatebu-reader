@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 import Bookmark from '../components/Bookmark'
 
 class BookmarkList extends Component {
@@ -16,7 +17,7 @@ class BookmarkList extends Component {
 
     return (
       <div>
-        <ul>
+        <ul className="mdl-list">
           {nodes}
         </ul>
       </div>
@@ -27,5 +28,15 @@ class BookmarkList extends Component {
 BookmarkList.propTypes = {
   bookmarks: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired
 }
+
+const mapStateToProps = (state) => {
+  return {
+    bookmarks: state.bookmarks
+  }
+}
+
+BookmarkList = connect(
+  mapStateToProps
+)(BookmarkList)
 
 export default BookmarkList
