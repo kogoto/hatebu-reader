@@ -1,44 +1,51 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import * as actionCreators from '../actions/api'
-import Tab from '../components/Tab'
+import { AppBar, Tabs, Tab } from 'material-ui'
+import { TYPES } from '../constants/ApiCategory'
+import * as apiActions from '../actions/api'
+import * as menuActions from '../actions/menu'
 
 class Header extends Component {
-  componentDidMount() {
-    this.props.fetchBookmarks()
+  handleOnTabSelect(type) {
+    const { selectedCategory, selectTab, fetchBookmarks } = this.props
+    selectTab(type)
+    fetchBookmarks(type, selectedCategory)
   }
 
   render() {
-    const { title, tabs, fetchBookmarks } = this.props
+    const { title, toggleMenu } = this.props
 
-    let nodes = tabs.map(tab => {
+    let tabs = Object.keys(TYPES).map(key => {
       return (
         <Tab
-          key={tab.id}
-          id={tab.id}
-          caption={tab.caption}
-          active={tab.active}
-          onClick={fetchBookmarks}
-        />
+          key={key}
+          label={TYPES[key].name}
+          onActive={() => this.handleOnTabSelect(key)}
+          />
       )
     })
 
     return (
-      <header className="mdl-layout__header">
-        <div className="mdl-layout__header-row">
-          <span className="mdl-layout-title">{title}</span>
-        </div>
-        <div className="mdl-layout__tab-bar mdl-js-ripple-effect">
-          {nodes}
-        </div>
+      <header>
+        <AppBar
+          title={title}
+          onLeftIconButtonTouchTap={toggleMenu}
+        />
+        <Tabs>{tabs}</Tabs>
       </header>
     )
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    selectedCategory: state.menu.selectedCategory
+  }
+}
+
 Header = connect(
-  null,
-  actionCreators
+  mapStateToProps,
+  Object.assign({}, menuActions, apiActions)
 )(Header)
 
 export default Header

@@ -1,27 +1,18 @@
 import React, { Component, PropTypes } from 'react'
+import { Card, CardHeader, CardText } from 'material-ui'
 
 class Bookmark extends Component {
   render() {
     const { bookmark } = this.props
+    const title = (<a href={bookmark.link} target="_blank">{bookmark.title}</a>)
 
     return (
-      <li className="mdl-list__item">
-        <span className="mdl-list__item-primary-content">
-          <div className="mdl-card mdl-shadow--2dp">
-            <div className="mdl-card__title">
-              <a href={bookmark.link} className="mdl-card__title-text">
-                {bookmark.title}
-              </a>
-            </div>
-            <div className="mdl-card__supporting-text">
-              {bookmark.description}
-            </div>
-            <div className="mdl-card__actions mdl-card--border">
-              {bookmark.bookmarkcount} users
-            </div>
-          </div>
-        </span>
-      </li>
+      <Card>
+        <CardHeader title={title} subtitle={`${bookmark.bookmarkcount} users`}/>
+        <CardText>
+          {bookmark.description}
+        </CardText>
+      </Card>
     )
   }
 }

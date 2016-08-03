@@ -18,17 +18,19 @@ const bookmark = handleActions({
   [types.FETCH_BOOKMARKS]: (state, action) => ({ ...state, id: nextBookmarkId++ }),
 }, initialState)
 
+const initialBookmarksState = []
+
 const bookmarks = handleActions({
   [types.FETCH_BOOKMARKS]: {
     next: (state, action) => {
-      let items = action.payload.query.results.item
+      let items = action.payload
       return items.map(b => bookmark(b, action))
     },
 
     throw: (state, action) => {
-      return []
+      return initialBookmarksState
     }
   }
-}, [])
+}, initialBookmarksState)
 
 export default bookmarks

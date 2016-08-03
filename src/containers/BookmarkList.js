@@ -1,5 +1,7 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { List, ListItem } from 'material-ui'
+import * as actionCreators from '../actions/api'
 import Bookmark from '../components/Bookmark'
 
 class BookmarkList extends Component {
@@ -8,25 +10,18 @@ class BookmarkList extends Component {
 
     let nodes = bookmarks.map(bookmark => {
       return (
-        <Bookmark
+        <ListItem
           key={bookmark.id}
-          bookmark={bookmark}
-        />
+          >
+          <Bookmark bookmark={bookmark} />
+        </ListItem>
       )
     })
-
+    
     return (
-      <div>
-        <ul className="mdl-list">
-          {nodes}
-        </ul>
-      </div>
+      <List>{nodes}</List>
     )
   }
-}
-
-BookmarkList.propTypes = {
-  bookmarks: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired
 }
 
 const mapStateToProps = (state) => {
@@ -36,7 +31,8 @@ const mapStateToProps = (state) => {
 }
 
 BookmarkList = connect(
-  mapStateToProps
+  mapStateToProps,
+  actionCreators
 )(BookmarkList)
 
 export default BookmarkList
