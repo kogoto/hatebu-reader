@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware } from 'redux'
-import promiseMiddleware from 'redux-promise'
+import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import reducer from '../reducers'
 
@@ -7,7 +7,7 @@ const logger = createLogger()
 
 const middleware = [
   logger,
-  promiseMiddleware
+  thunkMiddleware
 ]
 
 const store = createStore(

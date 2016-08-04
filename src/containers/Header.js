@@ -7,9 +7,8 @@ import * as menuActions from '../actions/menu'
 
 class Header extends Component {
   handleOnTabSelect(type) {
-    const { selectedCategory, selectTab, fetchBookmarks } = this.props
-    selectTab(type)
-    fetchBookmarks(type, selectedCategory)
+    const { selectedCategory, fetchBookmarks } = this.props
+    fetchBookmarks({ type: type, category: selectedCategory })
   }
 
   render() {
@@ -39,7 +38,7 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    selectedCategory: state.menu.selectedCategory
+    selectedCategory: state.bookmarks.category
   }
 }
 

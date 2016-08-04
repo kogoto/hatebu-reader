@@ -11,9 +11,8 @@ class MainMenu extends Component {
   }
 
   handleOnMenuItemSelect(category) {
-    const { selectedType, selectMenu, fetchBookmarks } = this.props
-    selectMenu(category)
-    fetchBookmarks(selectedType, category)
+    const { selectedType, fetchBookmarks } = this.props
+    fetchBookmarks({ type: selectedType, category: category })
   }
 
   render() {
@@ -46,8 +45,8 @@ class MainMenu extends Component {
 const mapStateToProps = (state) => {
   return {
     open: state.menu.open,
-    selectedType: state.menu.selectedType,
-    selectedCategory: state.menu.selectedCategory
+    selectedType: state.bookmarks.type,
+    selectedCategory: state.bookmarks.category
   }
 }
 

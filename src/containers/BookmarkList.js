@@ -26,7 +26,7 @@ class BookmarkList extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    bookmarks: state.bookmarks
+    bookmarks: state.bookmarks.bookmarks
   }
 }
 

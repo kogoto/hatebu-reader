@@ -1,24 +1,17 @@
 import { handleActions } from 'redux-actions'
-import * as types from '../constants/MenuActions'
-import { TYPE_HOTENTRY, CATEGORY_ALL } from '../constants/ApiCategory'
+import * as types from '../constants/ActionTypes'
 
 const initialState = {
-  open: false,
-  selectedType: TYPE_HOTENTRY,
-  selectedCategory: CATEGORY_ALL,
+  open: false
 }
 
 const menu = handleActions({
+  [types.FETCH_REQUEST]: (state, action) => (
+    { ...state, open: false }
+  ),
+
   [types.TOGGLE_MENU]: (state, action) => (
     { ...state, open: !state.open }
-  ),
-
-  [types.SELECT_MENU]: (state, action) => (
-    { ...state, open: false, selectedCategory: action.payload }
-  ),
-
-  [types.SELECT_TAB]: (state, action) => (
-    { ...state, selectedType: action.payload }
   )
 }, initialState)
 
